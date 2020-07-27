@@ -69,3 +69,11 @@ x = 10;  // 10은 리터럴이라고 부른다.
         //long veryBigInt = 10000000000; => int보다 큰 값을 넣을경우 에러가 발생한다. 이때 마지막에 L을 붙여준다.
         long veryBigInt = 10000000000L;
 ```
+    * 진수법
+```
+Binary(2), Octal(8), Decimal(10), Hexadecimal(16)
+        System.out.println(0b1101); // 2진수
+        System.out.println(071); // 8진수
+        System.out.println(1424); // 10진수
+        System.out.println(0x11); // 16진수
+```
