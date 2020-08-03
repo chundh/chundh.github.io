@@ -19,9 +19,9 @@ texture:
   title: Chun DoHee
   tagline: Developer
   date_format: "%b %-d, %Y"
-  style: black
-  showNav: false
-  showPicker: true
+  style: blue
+  showNav: true
+  showPicker: false
 
   # generate social links in footer
   social_links:
