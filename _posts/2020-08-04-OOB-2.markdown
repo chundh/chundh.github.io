@@ -34,7 +34,8 @@ public static void swapPrimitive(int x, int y){
         x.value = y.value;
         y.value = temp;
     }
-    ```
+```
+
 - - -
 
 ### 생성자
