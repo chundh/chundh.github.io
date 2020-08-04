@@ -17,18 +17,16 @@ categories: Java_Basic
    * static이 붙으면 정적 메소드, 클래스 메소드라 부른다.
    * 함수에 파라미터를 넘겨받을 때 기본형 타입은 값을 복사해서 넘겨받는다. 따라서 밖의 코드에는 영향을 미치지 못한다.
    * class를 넘겨받을 때는 주소값으로 데이터를 가져오고, 밖의 코드에 영향을 미친다.
-	```
+```
 public static void swapPrimitive(int x, int y){
         // 메소드를 호출할때 값을 복사해서 넘긴다.
         // 기본형 타입(Primitive type)의 경우는 값이 복사되어서 넘어온다.
         // int x, int y의 사본이 넘어온다.
-
         int temp = x;
         x = y;
         y = temp;
         // 계산 후 데이터가 다 사라지면서 밖의 코드에는 영향을 미치지 못한다.
     }
-
     public static void swapReference(Foo x, Foo y){
         // Foo는 class이다. class는 참조형 변수이므로 값을 넘기지 않고 주소값을 넘긴다. Call by Reference
         // 실제 주소값으로 데이터를 가져와 계산을 해서 밖의 코드에도 영향을 미친다.
@@ -66,6 +64,7 @@ class Constructor{
     // public은 외부에서 접근이 가능하고, private는 외부에서 접근이 불가능하다.
 }
 ```
+
 - - -
 ### Getter, Setter
 - 특징
