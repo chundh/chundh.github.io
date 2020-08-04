@@ -1,0 +1,101 @@
+---
+layout: post
+title:  "객체지향 프로그래밍 - 2"
+categories: Java_Basic
+---
+
+### 메소드(Method)
+- 특징
+   * 객체가 하는 동작을 정의하는 작업을 수행하는 코드의 집합
+   * 코드의 중복을 방지
+   * 유지보수성을 향상
+   * 코드의 가독성 개선
+- 선언과 정의의 차이
+   * 선언(Declaration): ~한 것이 있다 정도의 의미. 실제로 구현이 되지 않은 상태
+   * 정의(Definition): 선언된 것 + 구현이 된것. 변수는 초기화가 된 상태
+- 선언
+   * static이 붙으면 정적 메소드, 클래스 메소드라 부른다.
+   * 함수에 파라미터를 넘겨받을 때 기본형 타입은 값을 복사해서 넘겨받는다. 따라서 밖의 코드에는 영향을 미치지 못한다.
+   * class를 넘겨받을 때는 주소값으로 데이터를 가져오고, 밖의 코드에 영향을 미친다.
+	```
+public static void swapPrimitive(int x, int y){
+        // 메소드를 호출할때 값을 복사해서 넘긴다.
+        // 기본형 타입(Primitive type)의 경우는 값이 복사되어서 넘어온다.
+        // int x, int y의 사본이 넘어온다.
+
+        int temp = x;
+        x = y;
+        y = temp;
+        // 계산 후 데이터가 다 사라지면서 밖의 코드에는 영향을 미치지 못한다.
+    }
+
+    public static void swapReference(Foo x, Foo y){
+        // Foo는 class이다. class는 참조형 변수이므로 값을 넘기지 않고 주소값을 넘긴다. Call by Reference
+        // 실제 주소값으로 데이터를 가져와 계산을 해서 밖의 코드에도 영향을 미친다.
+        int temp = x.value;
+        x.value = y.value;
+        y.value = temp;
+    }
+    ```
+
+- - -
+
+### 생성자
+- 특징
+   * 클래스에서 인스턴스를 생성할 때 사용하는 메소드
+   * new 키워드를 사용할 때 호출되는 메소드
+   * 기본 생성자(Default Constructor), 파라미터 생성자(Parameter Constructor) 두 종류가 있다.
+```
+class Constructor{
+    int x;
+    int y;
+    String z; // z는 String이기 때문에 자동으로 초기화 될 때 null로 초기화 된다. null : 아무것도 참조하고 있지 않다.
+    public Constructor(){ // 기본 생성자. 구현하지 않아도 기본적으로 생성되어있다. 직접 생성하여 초기화 값을 정할 수 있다.
+        x = 1;
+        y = 2;
+        z = "초기화";
+    }
+    public Constructor(int x, int y, String z){
+    // 기본생성자를 오버 로딩하여 파라미터 생성자를 만들 수 있다.
+        this.x = x; // this는 멤버변수를 표기하기 위해 사용될 수 있다. this.x는 호출한 객체의 멤버 변수 x이다.
+        this.y = y;
+        this.z = z;
+    }
+    public Constructor(int a, int b){
+        this(a,b,""); // 이와 같은 방법으로도 초기화 가능. this는 무조건 메소드의 첫번째 줄에 들어가야 한다.
+    }
+    // public은 외부에서 접근이 가능하고, private는 외부에서 접근이 불가능하다.
+}
+```
+- - -
+### Getter, Setter
+- 특징
+   * 멤버 변수를 간접적으로 다룰 수 있게 해 주는 메소드
+   * 멤버 변수의 캡슐화(Encapsulation)에 도움이 됨-> 정보의 은닉/보호
+   * 멤버 변수의 값을 제한해야 할 때 유용
+
+- - -
+### 초기화 블록(Initializer Block)
+- 특징
+   * 초기화 블록(Initializer)
+   * 기본적으로 static, instance의 초기화 값을 설정할 수 있다.
+   * static initializer는 class가 호출되면 바로 접근한다.
+   * instance initializer는 객체가 생성될 때 접근한다.
+   * 하나의 class에 여러개 존재 할 수 있다. 여러개 존재한다면 위에서 아래의 순서로 접근한다.
+```
+// static initializer. 객체가 생성되기 전 접근한다. 따라서 instance 변수에는 접근할 수 없다.
+    static {
+        System.out.println("static block1");
+        classVar = 20;
+    }
+    // instance initializer. 객체가 생성될 때 접근한다. instance 변수, static 변수 모두 접근할 수 있다.
+    {
+        System.out.println("block1");
+        instanceVar = 30;
+        classVar = 50; // 권장하지 않는 방법
+        instanceCount++;// 예외적으로 instance의 갯수 등의 특정 값을 유지해야 할 때 static 변수 접근하는 것을 활용한다.
+    }
+    ```
+    
+    
+[Today_Link](https://github.com/chundh/java-til/tree/master/3_OOP/src/com/company/day2)

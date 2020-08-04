@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "객체지향 프로그래밍"
+title:  "객체지향 프로그래밍 - 1"
 categories: Java_Basic
 ---
 
@@ -81,11 +81,11 @@ public class MemoryStructure_Class { // 클래스 영역
    * 로컬 변수(local variable)
    * 로컬 파라미터 변수(local parameter variable, argument)
    * 사용 예시
+
 ```
 public class Variable_Class {
     static int classVar; // 클래스 멤버 변수. 별도로 초기화 하지 않으면 0으로 자동으로 초기화.
     int instanceVar; // 인스턴스 멤버 변수. 별도로 초기화 하지 않으면 0으로 자동으로 초기화.
-
     public void method(int paramVar){ // 로컬 파라미터 변수
         System.out.println(paramVar); // 로컬 파라미터 변수 출력
         int localVar; // 로컬 변수
@@ -100,6 +100,7 @@ public class Variable_Class {
     }
 }
 ```
+
 ```
 class VariableTest{
     public static void main(String[] args) {
