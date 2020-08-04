@@ -69,7 +69,7 @@ public class MemoryStructure_Class { // 클래스 영역
                                 // string은 객체이므로 힙 영역에 string의 참조형 값이, constant pool에 데이터 값이 저장된다.
     // 객체가 생성되면서 변수도 같이 생성되므로 객체와 같이 힙영역에 저장된다.
     public void method(int value){ // 클래스 영역
-        // int value -> 스택 영역
+        value = 10;-> 스택 영역
         char c = '='; // 스택 영역
     }
 }
@@ -93,7 +93,7 @@ public class Variable_Class {
         localVar = 10;
         System.out.println(localVar); // 로컬 변수 출력
         {
-            localVar = 10; // 상위 블록에서 선언 된 것은 하위 블록에서 변경 가능.
+            localVar = 10; // 상위 블록에서 선언 된 것은 하위 블록에서 변경 가능
             int localVar2 = 20;
         }
         // localVar2 = 10; // 생명주기가 끝났으므로 접근 불가. 하위 블록에서 선언한 변수는 상위블록에서 사용할 수 없다.
