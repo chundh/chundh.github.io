@@ -7,6 +7,7 @@ layout: page
 # MIT Licensed
 ---
 
+console.log(3);
 
 {% assign pinned = site.posts | where_exp: "item", "item.pin == true"  %}
 {% assign default = site.posts | where_exp: "item", "item.pin == nil "  %}
@@ -27,7 +28,7 @@ layout: page
 
 
 <!-- Get default posts -->
-
+console.log(222)
 {% assign default_beg = offset | minus: pinned.size %}
 
 {% if default_beg < 0 %}
