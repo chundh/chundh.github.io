@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "객체지향 프로그래밍 - 3"
-categories: [Java_Basic]
+categories: [Class, Java_Basic]
 ---
 
 ### 상속(Inheritence)

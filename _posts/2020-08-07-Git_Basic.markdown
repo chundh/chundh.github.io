@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Git 기초"
-categories: [Git]
+categories: [Class, Git]
 ---
 
 ### Shell Command
