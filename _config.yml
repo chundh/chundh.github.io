@@ -18,7 +18,7 @@ description: >-                        # used by seo meta and the atom feed
   and focuses on text presentation.
 
 # Replace with the website url, e.g. 'https://username.github.io'
-url: 'https://chundh.github.io/chundh.github.io'
+url: 'https://chundh.github.io/chundh.github.io/'
 
 author: Dohee Chun              # change to your full name
 
@@ -108,7 +108,7 @@ permalink: /posts/:title/
 defaults:
   -
     scope:
-      path: categories          # An empty string here means all files in the 
+      path: ""          # An empty string here means all files in the path
       type: posts
     values:
       layout: post
