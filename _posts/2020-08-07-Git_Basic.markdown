@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Git 기초"
-categories: Java_Basic
+categories: [Git]
 ---
 
 ### Shell Command

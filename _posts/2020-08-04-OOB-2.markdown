@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "객체지향 프로그래밍 - 2"
-categories: Java_Basic
+categories: [Java_Basic]
 ---
 
 ### 메소드(Method)

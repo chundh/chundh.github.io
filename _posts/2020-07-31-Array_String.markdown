@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "배열, 다차원 배열, 문자열"
-categories: Java_Basic
+categories: [Java_Basic]
 ---
 
 ### 배열

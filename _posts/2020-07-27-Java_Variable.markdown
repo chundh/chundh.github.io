@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "자바 기초용어, 변수"
-categories: Java_Basic
+categories: [Java_Basic]
 ---
 
 ### 용어정리
