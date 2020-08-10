@@ -23,10 +23,11 @@
 
 <script>
 SimpleJekyllSearch({
-  searchInput: document.getElementById('search-input').defaultValue = " ",
+  searchInput: document.getElementById('search-input'),
   resultsContainer: document.getElementById('search-results'),
   json: '{{ site.baseurl }}/assets/js/data/search.json',
   searchResultTemplate: '{{ result_elem | strip_newlines }}',
-  noResultsText: '{{ not_found }}'
+  noResultsText: '{{ not_found }}',
+  searchInput.value: ' '
 });
 </script>
