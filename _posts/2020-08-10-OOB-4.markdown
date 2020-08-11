@@ -19,22 +19,23 @@ categories: [Class, Java_Basic]
      Foo foo1 = new Foo();
      Bar bar1 = (Bar) foo1; // 문법 오류는 아니지만 자식클래스 타입으로 형변환하여 부모객체를 받는것 자체로 런타임에러가 발생한다.
     ```
+    
   * 오버라이딩에 의한 다형성
     ```java
     class Foo1{
-    	public String x = "Super";
+      public String x = "Super";
 
-   		public void MethodA(){
-        	System.out.println("Super Method");
-    	}
+   	  public void MethodA(){
+        System.out.println("Super Method");
+      }
 	}
 	class Bar1 extends Foo1{
-    	public String x = "Sub";
+      public String x = "Sub";
 
-    	@Override
-    	public void MethodA(){
-    	    System.out.println("Sub");
-    	}
+      @Override
+      public void MethodA(){
+        System.out.println("Sub");
+      }
 	}
     ```
     + 멤버 변수를 재정의 하는 경우 선언된 객체의 타입을 따른다.
