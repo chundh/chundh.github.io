@@ -118,4 +118,4 @@ categories: [Class, Java_Basic]
     Family family = Family.SON; // SON 객체가 생성되면서 객체의 koreanWord가 아들로 초기화 된다.
   ```
   
-  
+[Today Link](https://github.com/chundh/java-til/tree/master/4_OOP_Advanced/src/com/company/day2/Interface)
