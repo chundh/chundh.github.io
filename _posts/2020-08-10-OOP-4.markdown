@@ -101,3 +101,6 @@ categories: [Class, Java_Basic]
   AbstractFoo afoo = (AbstractFoo) foo;
   afoo.absractMethod(); // 실행 가능
   ```
+  
+  [Today Link1](https://github.com/chundh/java-til/tree/master/3_OOP/src/com/company/day4)
+  [Today Link2](https://github.com/chundh/java-til/tree/master/4_OOP_Advanced/src/com/company/day1/AbstractClass)
