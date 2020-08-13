@@ -1,22 +1,22 @@
 ---
 layout: post
-title:  "객체지향 프로그래밍 - 2"
+title:  "객체지향 프로그래밍 - 2(Method)"
 categories: [Class, Java_Basic]
 ---
 
-### 메소드(Method)
-- 특징
-   * 객체가 하는 동작을 정의하는 작업을 수행하는 코드의 집합
-   * 코드의 중복을 방지
-   * 유지보수성을 향상
-   * 코드의 가독성 개선
-- 선언과 정의의 차이
-   * 선언(Declaration): ~한 것이 있다 정도의 의미. 실제로 구현이 되지 않은 상태
-   * 정의(Definition): 선언된 것 + 구현이 된것. 변수는 초기화가 된 상태
-- 선언
-   * static이 붙으면 정적 메소드, 클래스 메소드라 부른다.
-   * 함수에 파라미터를 넘겨받을 때 기본형 타입은 값을 복사해서 넘겨받는다. 따라서 밖의 코드에는 영향을 미치지 못한다.
-   * class를 넘겨받을 때는 주소값으로 데이터를 가져오고, 밖의 코드에 영향을 미친다.
+## 메소드(Method)
+### 특징
+- 객체가 하는 동작을 정의하는 작업을 수행하는 코드의 집합
+- 코드의 중복을 방지
+- 유지보수성을 향상
+- 코드의 가독성 개선
+- static이 붙으면 정적 메소드, 클래스 메소드라 부른다.
+- 함수에 파라미터를 넘겨받을 때 기본형 타입은 값을 복사해서 넘겨받는다. 따라서 밖의 코드에는 영향을 미치지 못한다.
+- class를 넘겨받을 때는 주소값으로 데이터를 가져오고, 밖의 코드에 영향을 미친다.
+
+### 선언과 정의의 차이
+- 선언(Declaration): ~한 것이 있다 정도의 의미. 실제로 구현이 되지 않은 상태
+- 정의(Definition): 선언된 것 + 구현이 된것. 변수는 초기화가 된 상태
 ```
 public static void swapPrimitive(int x, int y){
         // 메소드를 호출할때 값을 복사해서 넘긴다.
@@ -35,8 +35,6 @@ public static void swapPrimitive(int x, int y){
         y.value = temp;
     }
 ```
-
-- - -
 
 ### 생성자
 - 특징
@@ -66,14 +64,12 @@ class Constructor{
 }
 ```
 
-- - -
 ### Getter, Setter
 - 특징
    * 멤버 변수를 간접적으로 다룰 수 있게 해 주는 메소드
    * 멤버 변수의 캡슐화(Encapsulation)에 도움이 됨-> 정보의 은닉/보호
    * 멤버 변수의 값을 제한해야 할 때 유용
 
-- - -
 ### 초기화 블록(Initializer Block)
 - 특징
    * 초기화 블록(Initializer)
@@ -81,20 +77,20 @@ class Constructor{
    * static initializer는 class가 호출되면 바로 접근한다.
    * instance initializer는 객체가 생성될 때 접근한다.
    * 하나의 class에 여러개 존재 할 수 있다. 여러개 존재한다면 위에서 아래의 순서로 접근한다.
-```
-// static initializer. 객체가 생성되기 전 접근한다. 따라서 instance 변수에는 접근할 수 없다.
-    static {
-        System.out.println("static block1");
-        classVar = 20;
-    }
-    // instance initializer. 객체가 생성될 때 접근한다. instance 변수, static 변수 모두 접근할 수 있다.
-    {
-        System.out.println("block1");
-        instanceVar = 30;
-        classVar = 50; // 권장하지 않는 방법
-        instanceCount++;// 예외적으로 instance의 갯수 등의 특정 값을 유지해야 할 때 static 변수 접근하는 것을 활용한다.
-    }
-    ```
+   ```
+   // static initializer. 객체가 생성되기 전 접근한다. 따라서 instance 변수에는 접근할 수 없다.
+   static {
+       System.out.println("static block1");
+       classVar = 20;
+   }
+   // instance initializer. 객체가 생성될 때 접근한다. instance 변수, static 변수 모두 접근할 수 있다.
+   {
+       System.out.println("block1");
+       instanceVar = 30;
+      classVar = 50; // 권장하지 않는 방법
+       instanceCount++;// 예외적으로 instance의 갯수 등의 특정 값을 유지해야 할 때 static 변수 접근하는 것을 활용한다.
+   }
+   ```
     
     
 [Today_Link](https://github.com/chundh/java-til/tree/master/3_OOP/src/com/company/day2)
