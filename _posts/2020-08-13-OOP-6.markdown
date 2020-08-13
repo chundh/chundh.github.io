@@ -96,4 +96,4 @@ public void method3(WildGeneric<? super WildBar> x){} // WildBar와 WildBar의 �
   ```
 
 
-[Today Link](https://github.com/chundh/java-til/tree/master/4_OOP_Advanced/src/com/company/day2/Interface)
+[Today Link](https://github.com/chundh/java-til/tree/master/4_OOP_Advanced/src/com/company/day3)
