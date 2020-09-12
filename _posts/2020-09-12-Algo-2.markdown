@@ -12,7 +12,7 @@ categories: [Class, Algorithm]
 - 모든 노드 간의 거리를 초기화 해준다(큰 수) `map[i][j] = INF`
 - 자기 자신은 접근할 수 없다. `map[i][j] = 0`
 - 문제에서 주어진 경로를 map에 저장한다. `map[i][j] = cost`
-- 3중 for문을 돌리며 최단 거리를 계산, 업데이트한다. ` map[i][j] = Math.min(map[i][j], map[i][k] + map[k][j]);`
+- 3중 for문을 돌리며 최단 거리를 계산, 업데이트한다. `map[i][j] = Math.min(map[i][j], map[i][k] + map[k][j]);`
 
 ### 예제 : 백준 11404
 - 문제
