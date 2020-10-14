@@ -75,6 +75,7 @@ categories: [Class, Algorithm]
         return;
     }
 ```
+
 ```java
  // Queue를 활용해 BFS를 돌면서 s노드 기준 연결된 모든 노드의 거리를 알 수 있다.
     static node getTreeDiameter(int s){
