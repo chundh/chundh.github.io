@@ -28,7 +28,6 @@ public class 트리트리오중간값 {
     static class node{
         int num;
         int weight;
-
         public node(int num, int weight) {
             this.num = num;
             this.weight = weight;
