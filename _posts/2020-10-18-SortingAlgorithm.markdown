@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Sorting Algorithm"
-categories: [Class, Computer Science]
+categories: [Class, Algorithm]
 ---
 
 ## Sorting Algorithm (정렬 알고리즘)
