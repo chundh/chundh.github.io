@@ -1,0 +1,99 @@
+---
+layout: post
+title:  "객체지향 프로그래밍 - 9(람다식 표현-1)"
+categories: [Class, Java_Basic]
+---
+
+## 람다식 표현(Lambda Expression)
+### 특징
+- JDK 1.8에서 추가된 함수형 프로그래밍 기법이다.
+- 객체지향 프로그래밍과 다르게 비즈니스 로직만 빠르게 구현하는 것이다.
+- 객체지향 언어에서 메소드를 함수처럼 사용하는 방식이다.
+
+### 람다식을 활용한 예시
+```java
+// 방법 1. Comparator 클래스를 만들고 객체를 생성하여 전달
+class MyComparator implements Comparator<String>{
+    @Override
+    public int compare(String o1, String o2) {
+        return o1.compareTo(o2);
+    }
+}
+Arrays.sort(strings, new MyComparator());
+// 방법 2. 익명 내부 클래스를 이용
+Arrays.sort(strings, new Comparator<String>() {
+    @Override
+    public int compare(String o1, String o2) {
+        return 0;
+    }
+});
+// 방법 3. 람다식을 이용. 실제로 동작하는 부분만 심플하게 표현.
+Arrays.sort(strings, (o1, o2) -> 0);
+```
+
+## 커스텀 Interface를 활용한 람다식
+### 특징
+- Interface 안에는 단 하나의 abstract method가 있을때만 람다식을 사용할 수 있다.
+- 이때 default method는 상관없다.
+
+### 코드
+```java
+interface Runner<T>{
+    T run(String x);
+    default void method(){}
+}
+
+public class Lambda2 {
+    static void useRunner(Runner<?> runner){ // ?는 와일드카드. 어떠한 것도 들어올 수 있다.
+        System.out.println(runner.run(x));
+    }
+    public static void main(String[] args) {
+    	// 셋 다 같은 기능을 수행한다.
+        useRunner("lambda", (String x)-> {return x;});
+        useRunner("lambda", x -> {return x;}); // ; 가 들어가면 {}필수
+        useRunner("lambda", x-> x);
+    }
+}
+```
+
+## 람다식과 익명클래스의 차이점
+- this로 호출되는 객체가 다르다.
+- 익명 클래스는 실제로 객체가 만들어지고 기능이 수행된다면 람다식은 상위 클래스의 객체를 활용해 기능이 수행된다.
+
+```java
+interface IFoo{
+    String method();
+}
+
+public class Lambda4 {
+    static void functionalMethod(IFoo ifoo){
+        System.out.println(ifoo.method());
+    }
+
+    void methodA(){ // 람다식과 익명클래스에서의 this 객체가 동일하지 않음을 보여준다.
+        functionalMethod(()->{
+            // this가 new Lambda4()이다.
+            // 실제로 객체가 생성되지 않는다.
+            System.out.println("this : " + this);
+            System.out.println("OuterClass this : " + Lambda4.this);
+            return "Lambda expression used";
+        });
+
+        functionalMethod(new IFoo() { // 익명클래스가 만들어지고, 그 객체가 만들어지는 과정
+            @Override
+            public String method() {
+                System.out.println("this : " + this);
+                System.out.println("OuterClass this : " + Lambda4.this);
+                return "Anonymous local inner class used";
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        new Lambda4().methodA();
+    }
+}
+```
+
+
+[Link](https://github.com/chundh/java-til/tree/master/5_JavaAdvanced/src/com/company/day3/Lambda)
