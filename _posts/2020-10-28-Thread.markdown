@@ -187,4 +187,4 @@ new Thread(() -> {
 }).start();
 ```
 
-[Github Link]()
+[Github Link](https://github.com/chundh/java-til/tree/master/5_JavaAdvanced/src/com/company/day8/Multi_Thread)
