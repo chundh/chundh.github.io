@@ -1,0 +1,190 @@
+---
+layout: post
+title:  "Thread"
+categories: [Class, Java_Basic]
+---
+
+## Thread를 활용한 Programming
+### Thread와 Process의 차이
+- Thread
+  - Process의 최소 동작 단위이다.
+  - 하나의 Process는 여러개의 Thread를 가질 수 있다.
+  - Thread는 각각 독립적인 Stack영역을 갖고 있다.
+    - Thread는 각각 독립적인 행위를 하고, 내부적으로도 변수를 선언할 수 있다.
+    - 모든 명령이 한번에 수행될 수 없고, 중간중간 Interrupt가 일어난다.
+    - 그럴때 지금까지 수행한 것을 저장할 수 있어야 하고, 이를 Stack 영역에 저장한다.
+  - 동일 Process의 Thread는 Process의 힙영역을 공유한다.
+- Process
+  - OS로 부터 메모리를 할당 받아 동작하는 프로그램의 실행 단위이다.
+  - 프로그램이 메모리에 상주하면서 동작하는 순간 프로세스가 된다.
+  - Process끼리 메모리 영역을 공유하지 않는다.
+    - Process는 각자 다른 가상 메모리 공간을 갖고 있어서, 객체를 바로 보낼 수 없다.
+    - 객체의 경우 메모리에 접근하기 위한 참조값을 갖고 있는데, 이를 다른 프로세스에 보내도 같은 데이터를 가져올 수 없다.
+    - 객체를 보내야 하는 경우 Searialization(직렬화)를 통해 Byte(Primitive Type) 형식으로 변환하여 다른 Process로 보낸다.
+
+### Thread의 생성
+- Runnable을 익명의 내부 클래스로 선언하고, 메소드를 Override하는 방법
+```java
+Thread p1 = new Thread(new Runnable() {
+    @Override
+    public void run() {
+       System.out.println("Hello Thread");
+    }
+});
+p1.start();
+```
+
+- 람다식을 활용한 방법
+```java
+Thread p2 = new Thread(() ->{
+    System.out.println("Lambda Thread");
+});
+p2.start();
+```
+
+- Thread 객체를 만들고 생성하여 사용
+```java
+MyThread mt = new MyThread();
+mt.start();
+```
+
+- 정의 후 바로 실행
+```java
+new Thread(()->{
+    System.out.println("IDEA");
+}).start(); // Sync나 join을 신경쓰지 않아도 되는 경우에 편하게 사용
+```
+
+### Thread의 흐름 제어
+- join()
+  - Thread의 join()메소드를 활용한 제어 방식이다.
+  - 해당 Thread가 종료될때까지 대기하고, 다음 코드를 실행한다.
+  - `Thread.join(100)` 처럼 시간만큼 쓰레드의 종료를 기다리다가 종료 여부에 상관없이 다음 코드를 진행할 수 있다.
+  - 위의 경우 Thread가 끝날 때까지 프로그램은 종료되지않는다.
+
+- yield()
+  - Thread의 yield()메소드를 활용한 제어 방식이다.
+  - 다른 Thread로 동작 권한을 양보 후 바로 실행대기 상태가 된다.
+
+- setPrioirity()
+  - setPriority() 메소드로 Thread의 우선순위를 설정할 수 있다.
+  - 하지만 OS에서 Starving하는 Thread가 생기는 것을 방지하기 위해 우선순위를 조절하기 때문에 사용자가 정확하게 우선순위를 결정할 수 없다.
+
+## Multi Thread
+- 여러개의 Thread를 사용하는 Programming 기법이다.
+- 장점
+  - 여러 동작을 병렬적으로 처리하여 CPU사용률을 높인다.(CPU Utilization)
+    - 인코딩, 렌더링 작업등 많은 CPU사용이 요구되는 작업에 사용된다.
+  - 시간이 걸리는 동작을 분리하여 프로그램의 응답률을 높인다.
+    - GUI, 게임, 앱 등을 구현할 때 동작을 분리한다.(Ex. 사용자의 입력을 받으면서 다른 동작을 실행)
+- 단점
+  - 디버깅이 어렵다.
+    - 쓰레드가 동시에 동작하기 때문에 디버거로 확인하기 어렵다.
+    - 디버거를 쓰거나, 디버깅을 위한 코드를 추가할 때 동작이 변할 수 있다.(해당 코드로 인해 우선순위가 바뀌기 때문이다.)
+  - 구현이 어렵다.
+    - 쓰레드간의 동기화를 하기 위한 구현이 어렵다.(Dead Lock, 데이터 동기화 문제 등등)
+    - 쉽게 동기화를 하면 속도가 느려진다.(Multi Thread를 쓰는 의미 상실)
+    - Context Switching Overhead가 발생하기 때문에 잘 못쓰면 단일 Thread보다 속도가 느릴 수 있다.
+      - Overhead: 명령 실행을 위해 부가적으로 소모되는 것(메모리 할당, 명령 호출 등)
+
+### Multi Thread의 흐름 제어 방식
+- Intrinsic Lock(고유락)
+  - 자바의 모든 객체는 자체적으로 고유의 Lock을 갖고 있다.
+  - Lock은 객체의 소유권을 결정하는 내부적으로 구현된 것이다.
+  - 객체의 소유권은 독점적이다.
+- synchronized
+  - synchronized 를 활용해 객체의 소유권을 판단하고, 가져올 수 있다.
+  - 해당 문구가 실행되는 시점에 객체의 소유권이 점유되었을 때는, Blocking으로 동작한다.
+    - Blocking : 해당 코드에 대한 응답이 올때까지 대기상태를 유지한다.
+    - Non-Blocking : 해당 코드에 대한 응답과 상관없이 코드를 계속 진행한다.
+- notify()/notifyAll() - wait()
+  - synchronized 안에서만 사용할 수 있다.
+  - notify()
+    - 대기중인 다른 쓰레드 하나를 실행대기 상태로 만든다. 우선순위가 높은 쓰레드를 실행하고 싶겠지만, 이는 확정적으로 이루어지지 않는다.
+  - notifyAll()
+    - 대기중인 모든 쓰레드를 실행대기 상태로 만든다. lock을 반환받기 위한 상태가 된다.
+  - wait()
+    - lock을 반환하고 대기상태로 돌아가면서, 대기중이던 다른 쓰레드가 실행된다.
+  - 메소드 특성상 반드시 notify/notifyAll 실행 후 wait을 실행해야 한다. wait을 두번 실행하면 서로 대기하는 `DeadLock` 상태가 된다.
+- 위의 방법들을 활용해 Multi Thread를 사용할 때, 데이터를 안전하게 공유한다.
+  - Thread에서 하나의 공유자원에 접근할 때, 동기화를 명확하게 하지 않으면 올바른 계산이 이루어지지 않는다.
+- 소유권이 있는 Thread(Lock을 갖고 있는)가 종료되면 Lock을 반환하고 Blocking 상태로 대기중인 Thread에게 Lock이 넘어간다.
+- Thread에서 Thread로 Lock을 넘기는 것이 아닌, OS가 Lcok을 넘기고 반환받는다.
+
+### Multi Thread에서의 흐름 제어(Java)
+- Object 객체의 Instrinsic Lock을 활용하는 방법.
+```java
+class Counter{
+    private Object lock = new Object();
+    private int count = 0;
+    public int increaseCount(){
+        synchronized (lock){ // lock이라는 객체를 소유해야만 안의 내용을 동작시킬 수 있다.
+            return ++count;
+        }
+    }
+}
+```
+
+- `this`객체의 고유 Lock을 활용하는 방법. 가장 선호되는 방법이다.
+```java
+class Counter2{
+    private int count = 0;
+    public int increaseCount(){
+        synchronized (this){
+            return ++count;
+        }
+    }
+}
+```
+
+- 메소드에 synchronized 키워드를 사용한 방법.
+```java
+class Counter3{
+    private int count = 0;
+    public synchronized int increaseCount(){ // 메소드를 실행하기 위해서는 해당 객체의 lock을 소유하고 있어야 한다.
+        return ++count;
+    }
+}
+```
+
+- Thread의 run 메소드에서 synchronized 키워드를 사용하는 방법.
+```java
+Counter c = new Counter();
+new Thread(() -> {
+    for (int i = 0; i < 100; i++) {
+        // c라는 공유객체가 있을 때, 멀티스레드로부터 안전한 영역을 생성하는 방법
+        synchronized (c) {
+            c.increaseCount();
+        }
+    }
+}).start();
+```
+
+- notify() - wait()을 쓰는 방법
+```java
+public synchronized void methodA(){
+    System.out.println("A called");
+    notify();
+    try {
+        wait();
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+- 쓰면 안되는 방법
+```java
+new Thread(() -> {
+    synchronized (c) {
+      // 이렇게 구현하면 멀티쓰레드의 의미가 없다.
+      // 쓰레드의 실행이 끝날 때 까지 아무 일도 진행되지 않는다.
+      // 사실상 단일 쓰레드보다 더 효율이 안좋다.(context switching 오버헤드의 발생)
+      for (int i = 0; i < 100; i++) {
+         c.increaseCount();
+      }
+    }
+}).start();
+```
+
+[Github Link]()
