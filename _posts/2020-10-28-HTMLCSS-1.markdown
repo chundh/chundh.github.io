@@ -4,19 +4,15 @@ title:  "HTML-CSS-1"
 categories: [Class, ComputerScience]
 ---
 
-##
+### 브라우저가 채워지는 과정
+- reflow
+  - 화면을 구성하는 요소의 레이아웃을 배치하는 것.
+  - 화면 레이아웃 위치의 변화가 생기면 다시 호출된다.
+- repaint
+  - 구성된 요소의 내용을 채우는 것
+  - reflow와 함께 실행되지만, 레이아웃의 영향을 미치지 않는 변화에는 repaint만 실행된다.
 
-### 구성
-- html
-  * head
-    - title
-    - link
-  * body
-    - div.wrapper
-
-- reflow : 화면을 구성하는 요소의 레이아웃을 배치하는 것
-- repaint : 구성된 요소의 내용을 채우는 것
-
+### 항상 주의해야 할 사항
 - 논리적인 순서로 디자인해야한다.
   - 3단구조
     - 헤더(내비게이션이 포함되어있다.)
@@ -41,29 +37,26 @@ categories: [Class, ComputerScience]
 - 구조 설계를 해야한다.
   - 그림으로 영역을 구분하고, 해당 영역에 배치되는 것을 미리 설계하고 구현을 하는것이 더 빠르다.
 
-- Agent Style
+### html에 css를 붙이는 방법
+- `<link rel="stylesheet" href="css/main.css">`
+- head태그 안에 link태그를 열고 붙이고자 하는 css가 있는 경로를 href에 넣는다.
+
+
+### Agent Style
   - 기본적으로 디자인 되어 있는 스타일. (EX. h1태그 등등)
   - reset 기능을 활용해 해당 기능을 내가 원하는 값을 정할 수 있다.
-- 레이아웃 구성
-  - box model
-    - width
-    - padding
-    - margin
-    - border
-    - margin까지가 상자의 영역이다.
 
-| Header |
-|--------|
-| Visual |
-|** main**|
-|group1|
-|group2|
-|group3|
-|slogan|
-|**Footer**|
-|footer-inner|
+### 레이아웃 구성
+- box model
+  - width
+  - padding
+  - margin
+  - border
+  - margin까지가 상자의 영역이다.
+- inline model
+  - content의 크기만큼의 영역을 차지한다.
 
-- Float
-  - 해당 컴포넌트를 3차원 개념에서의 z축으로 띄운다.
-  - normal flow상 다음 컴포넌트가 y축의 한칸 위로 붙는다.
-  - 만약 붙은 컴포넌트가 텍스트가 있는 것이라면 오른쪽으로 밀려난다.
+###Float
+- 해당 컴포넌트를 3차원 개념에서의 z축으로 띄운다.
+- normal flow상 다음 엘리먼트가 y축의 한칸 위로 붙는다.
+- 만약 붙은 엘리먼트가 텍스트가 있는 것이라면 오른쪽으로 밀려난다.
