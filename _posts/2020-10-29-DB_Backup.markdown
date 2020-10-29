@@ -29,7 +29,7 @@ categories: [Class, database]
   - 문제 발생에 대한 파악이 어렵다.
   - OS 호환이 잘 안될 수 있다.
 
-### Backup 방식
+### Hot Logical Backup 방식
 - mysqldump -u root -p(패스워드) (데이터베이스) > (저장할 파일 이름)
 
 ### crontab을 활용한 자동 Backup
@@ -46,6 +46,14 @@ mysqldump -u <id> -p<pwd> test > $FILE
 ```
 */2 * * * * /bin/bash backup.sh
 ```
+
+### Cold Physical Backup 방식
+- 먼저 서버를 중단한다.
+  - sudo systemctl stop mysql
+- 파일을 백업할 폴더를 만들고 파일을 이동한다.
+  - cp -r* /home/ubuntu/backup
+- 파일의 권한을 mysql에서 ubuntu로 바꾼다.(ubuntu에서 파일을 이동시키려면 파일 권한이 ubuntu여야 한다.)
+  - sudo chown -R ubuntu: /home/ubuntu/backup
 
 - 위의 경우 2분에 한번씩 backup.sh가 실행된다.
   - *위치뒤에 /number를 붙여서 자동으로 실행되는 시간 간격을 조절할 수 있다.
