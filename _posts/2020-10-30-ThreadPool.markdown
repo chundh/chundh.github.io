@@ -93,4 +93,6 @@ class CallableWork implements Callable<String>{
 - 작업을 모두 실행해도 자동으로 종료가 되지 않기 때문에 직접 종료해야한다.
 - `pool.shutdown()`: `Thread.join()`과 마찬가지로 Thread가 종료될때까지 기다렸다가 Thread Pool을 종료한다. Non Blocking이다.
 
+- 참고 : https://palpit.tistory.com/732
+
 [Github Link](https://github.com/chundh/java-til/blob/master/5_JavaAdvanced/src/com/company/day9/ThreadPool/ThreadPool.java)
