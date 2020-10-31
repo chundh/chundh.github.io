@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "test/Thread Pool"
+title:  "Thread Pool"
 categories: [Class, Java_Basic]
 ---
 ## Thread Pool
