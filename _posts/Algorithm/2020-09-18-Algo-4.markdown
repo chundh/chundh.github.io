@@ -1,0 +1,92 @@
+---
+layout: post
+title:  "위상정렬 알고리즘"
+categories: [Class, Algorithm]
+---
+
+## 위상정렬(Topological Sort)
+### 역할
+- 간선 그래프가 주어졌을 때, 선행되어야 할 노드와 그 후위 노드를 알 수 있다.
+
+### 알고리즘
+- 노드와 연결된 노드를 표현하기 위해 List를 선언한다. `List<List<Integer>> array = new ArrayList<List<Integer>>();`
+- 간선 정보를 array에 넣어주면서 자신을 가리키는 노드의 수를 더해준다.`array.get(a).add(b)` `indegree[b]++;`
+- 자신을 가리키는 노드의 수가 0인 노드가 선행되어야 할 노드이다. `if(indegree[i]==0)`
+- 선행되어야 할 노드를 Queue에 넣어준다.
+- 큐에서 값을 꺼내며 해당 노드가 가리키는 노드의 indegree를 -1한다.
+- indegree가 0이된다면 해당 노드를 큐에 넣는다.
+- 이를 반복한다.
+
+### 예제 : 백준 1005
+- 문제
+
+이번 게임에서는 다음과 같이 건설 순서 규칙이 주어졌다. 1번 건물의 건설이 완료된다면 2번과 3번의 건설을 시작할수 있다. (동시에 진행이 가능하다) 그리고 4번 건물을 짓기 위해서는 2번과 3번 건물이 모두 건설 완료되어야지만 4번건물의 건설을 시작할수 있다.
+
+따라서 4번건물의 건설을 완료하기 위해서는 우선 처음 1번 건물을 건설하는데 10초가 소요된다. 그리고 2번 건물과 3번 건물을 동시에 건설하기 시작하면 2번은 1초뒤에 건설이 완료되지만 아직 3번 건물이 완료되지 않았으므로 4번 건물을 건설할 수 없다. 3번 건물이 완성되고 나면 그때 4번 건물을 지을수 있으므로 4번 건물이 완성되기까지는 총 120초가 소요된다.
+
+프로게이머 최백준은 애인과의 데이트 비용을 마련하기 위해 서강대학교배 ACM크래프트 대회에 참가했다! 최백준은 화려한 컨트롤 실력을 가지고 있기 때문에 모든 경기에서 특정 건물만 짓는다면 무조건 게임에서 이길 수 있다. 그러나 매 게임마다 특정건물을 짓기 위한 순서가 달라지므로 최백준은 좌절하고 있었다. 백준이를 위해 특정건물을 가장 빨리 지을 때까지 걸리는 최소시간을 알아내는 프로그램을 작성해주자.
+
+### 코드
+```java
+public class baek_1005 {
+    static int[] arr;
+    static int ans;
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        for(int tc=0; tc<t; tc++){
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+            List<List<Integer>> array = new ArrayList<List<Integer>>();
+            int[] indegree = new int[n+1];
+            for(int i=0; i<=n; i++){
+                array.add(new ArrayList<>());
+                indegree[i] = 0;
+            }
+            arr= new int[n+1];
+            for(int i=1; i<=n; i++){
+                arr[i] = sc.nextInt();
+            }
+            for(int i=0; i<k; i++){
+                int a = sc.nextInt();
+                int b = sc.nextInt();
+                array.get(a).add(b);
+                indegree[b]++;
+            }
+            ans = sc.nextInt();
+            int[] dp = new int[n+1];
+            topologicalSort(indegree, array, dp);
+        }
+    }
+    static void topologicalSort(int[] indegree, List<List<Integer>> array, int[] time) {
+        Queue<Integer> q = new LinkedList<Integer>();
+        Queue<Integer> result = new LinkedList<Integer>();
+
+        // 큐에 indegree 가 0 인 노드 담기
+        for (int i = 1; i < indegree.length; i++) {
+            if (indegree[i] == 0) {
+                q.offer(i);
+                time[i] = arr[i];
+            }
+        }
+        /**
+         * 1. 큐에서 값을 꺼내며 해당 노드가 가리키는 노드의 indegree 를 1 감소
+         * 2. 만약 indegree가 0 이 된다면 큐에 넣기
+         * 3. 큐가 빌때까지 반복
+         */
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            result.offer(node);
+            for (Integer i : array.get(node)) {
+                indegree[i]--;
+                time[i] = Math.max(time[i], time[node]+arr[i]);
+                if (indegree[i] == 0) {
+                    q.offer(i);
+                }
+            }
+        }
+        System.out.println(time[ans]);
+    }
+
+}
+```
