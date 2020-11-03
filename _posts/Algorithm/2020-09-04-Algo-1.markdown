@@ -1,0 +1,72 @@
+---
+layout: post
+title:  "Graph"
+categories: [Class, Algorithm]
+---
+
+## Graph
+### 구성요소
+- 정점 (Node, Vertex)
+- 간선 (Edge) : 정점간의 관계 나타냄 (비용, 개수 등등)
+- 그래프는 Vertex와 Edge들의 집합이다.
+
+### 그래프의 종류
+- 유향 그래프
+  * 그래프에 방향성이 있는 그래프.
+- 가중치 그래프
+  * 간선에 가중치가 있는 그래프.(Ex. 정점 이동간에 드는 비용, 정점간의 거리 등등)
+- 다중 그래프
+  * 정점 사이의 두개 이상의 간선이 있는 그래프.
+- 트리
+  * 방향성이 없는 무향 그래프. 부모 자식간의 관계가 있을 수 있다.
+
+### 그래프의 표현 방식
+- 인접 리스트
+  * 가중치가 없는 인접리스트
+
+``` java
+ArrayList를 다차원 배열로 형성하여 양방향 리스트를 구현한다.
+ArrayList<ArrayList<Integer>> arr = new <ArrayList<Integer>> ArrayList(); // 인접 리스트 초기화
+        for(int i = 0; i < vertex의 수; i++){
+            arr.add(new<Integer> ArrayList());
+        }
+for(int i = 0; i < 간선의 갯수; i++){
+            int v1, v2;         // vertex
+            v1 = edge[i][0];
+            v2 = edge[i][1];
+            arr.get(v1).add(v2);
+            arr.get(v2).add(v1);
+            // 양방향 그래프이므로 두개의 vertex에 모두 추가해준다. 단방향인 경우 하나만 추가해주면 된다.
+        }
+```
+
+  * 가중치가 있는 인접리스트
+
+``` java
+class Edge <W, V> {  // Edge를 하나의 클래스로 표현하여 입력 받음
+    private W weight; // edge에 부여된 가중치
+    private V v; // edge 끝 부분에 있는 vertex의 번호
+    public void set_Edge(W weight, V v){ // edge에 값 setting하는 함수
+        this.weight = weight;
+        this.v = v;
+        }
+    }
+
+    ArrayList<Edge> ad = new <Edge> ArrayList();
+    Edge <Integer, Integer> arr = new  <Integer, Integer> Edge();
+
+    for(int i = 0; i < nV; i++)
+        ad.add(new <Integer, Integer> Edge()); //edge 초기화 (메모리 할당)
+    for(int i = 0; i < nE; i++){
+        int v1 // 시작 vertex
+        int v2 // 끝 vertex
+        int v3 // weight
+		arr.get(t1).set_Edge(t2, t3);
+        arr.get(t2).set_Edge(t1, t3);
+        }
+	}
+
+출처: https://manducku.tistory.com/21 [Manducku`s Code]
+```
+
+- 인접 행렬

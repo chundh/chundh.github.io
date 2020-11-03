@@ -1,0 +1,99 @@
+---
+layout: post
+title:  "객체지향 프로그래밍 - 6(Generic, Wrapper Class)"
+categories: [Class, Java_Basic]
+---
+
+## 제네릭
+
+### 특징
+- 대상 객체에 타입을 입력하면서 사용하는 형식
+- 미리 사용할 수 있는 타입을 명시해서 컴파일 타임에 체크 가능
+  * 입력을 `Object`로 할 수 있으나, 런타임에 `instanceOf`로 객체를 확인해야한다.
+  * 제네릭을 사용할 경우 이러한 과정 없이 간결하게 코드 작성을 할 수 있다.
+  ```java
+  class GenericFoo<T> { // T: 타입 파라미터
+    String name;
+    T memberVar; // T를 자료형으로 사용하여 변수 생성 가능
+    public GenericFoo(String name, T memberVar){ // T를 자료형으로 사용하는 메소드 생성 가능
+    }
+  }
+  interface GenericInterface<T>{ // 인터페이스도 제네릭 사용 가능
+   }
+  class HashMap<K, V> { // 여러개의 타입 파라미터도 쓸 수 있다.
+  }
+  GenericFoo<String> foo = new GenericFoo<String>("name", "var"); // foo 객체에 한해서 T는 String이다. // 다음과 같이 만들어 사용한다.
+  ```
+- static 변수는 만들 수 없다.
+  ```java
+  static T classVar; // 사용 불가능하다.
+  ```
+  * 스태틱 변수는 객체와 상관없이 클래스에 속한다. 객체 생성 전에 이미 생성이 되어야 하므로 T가 될 수 없다.
+
+- static 메소드는 경우에 따라 가능하다.
+  ```java
+  public static <T> T staticMethod(T t){} // 제네릭 클래스의 파라미터와 제네릭 메소드의 파라미터는 별개이다.
+  ```
+  * T라는 특정 자료형의 변수가 들어오면 알아서 타입에 맞춰서 메소드가 진행된다.
+  * 클래스 생성시에 선언만되고, 런타임 시점에 정의와 구현이 이루어진다. -> 동적바인딩이 이루어진다.
+
+
+### 제네릭 타입의 상속
+- 클래스의 타입 파라미터는 부모 제네릭의 타입 파라미터를 모두 채워줘야 하고, 부모 파라미터 외의 추가적인 파라미터도 사용할 수 있다.
+  ```java
+  class GIGFoo<K, T, D> extends GFoo<T> implements IGFoo<D>{}
+  ```
+- 부모 클래스/인터페이스가 동일한 타입의 파라미터를 넘겨줄 수 있다.
+  ```java
+  class IGIFoo<T> extends GFoo<T> implements IGFoo<T>{}
+  ```
+- extends를 통해서 제네릭 타입을 제한할 수 있다.
+  * 타입 제한을 하지 않으면 `<T extends Object>`와 동일하다.
+
+  ```java
+  class GenericTypeLimitation<T extends Number & Cloneable>{} // Number 추상클래스, Cloneable 인터페이스를 상속하는 클래스만 T로 올 수 있다.
+  ```
+
+### 와일드 카드
+- 메소드의 입력 타입에 제네릭이 쓰일 경우 제네릭의 타입 변수를 결정하지 않거나 제한할 수 있다.
+  * Object를 상속하는 모든 클래스가 ?에 올수 있다.
+```java
+class WildGeneric<T>{}
+```
+```java
+public void method1(WildGeneric<?> x){}
+public void method1(WildGeneric<? extends Object> x){} // <?>는 <? extends Object>와 같다.
+```
+  * super, extends를 통해 범위를 제한할 수 있다.
+```java
+public void method2(WildGeneric<? extends WildFoo> x){} // WildFoo와 WildFoo를 상속하는 클래스가 올 수 있다.
+public void method3(WildGeneric<? super WildBar> x){} // WildBar와 WildBar의 상위 클래스가 다 올 수 있다.
+```
+
+## Wrapper Class
+### 특징
+- 기본형 타입(Primitive Type)을 객체로 쓰기 위해 있는 클래스
+- 기본형 타입이 허용되지 않는 문법에 기본형 타입을 쓰기 위해서 제공된다.
+- ex)byte -> Byte, int -> Integer, double -> Double 등등
+- Autoboxing
+  * Primitive 타입이 객체로 사용되어야 할 때 자동으로 객체로 만들어 주는 것
+  ```java
+  Integer integer = new Integer(10);
+  byPass(5);
+  ```
+  * 제네릭에는 Primitive 타입이 올수 없지만 Autoboxing을 통해 사용 가능하다.
+  ```java
+  public static <T> T byPass(T x){ // T에는 원래 Primitive 타입은 올 수가 없다(int, double 등등)
+        return x;
+    }
+  ```
+- Unboxing
+  * Primitive 타입으로 사용되어야 할 때 자동으로 Primitive 타입으로 만들어 주는 것
+  ```java
+  public static <T> T byPass(T x){
+        return x; // return 하기 전에 Unboxing이 이루어진다.
+  }
+  ```
+
+
+[Today Link](https://github.com/chundh/java-til/tree/master/4_OOP_Advanced/src/com/company/day3)

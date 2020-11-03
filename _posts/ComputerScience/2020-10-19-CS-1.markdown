@@ -1,0 +1,48 @@
+---
+layout: post
+title:  "CS-1"
+categories: [Class, ComputerScience]
+---
+
+## URL
+### 정의
+- Uniform Resource Locator
+
+### 구성
+- `https://news.naver.com:80/main/read.nhn?mode=LSD&mid=shm&sid1=105&oid=001&aid=0009847211#da_727145`
+- `https://` : 프로토콜. 암호화 키를 갖고 있어서 내장된 데이터를 암호화 시킨다. `http://`는 암호화를 거치지 않은 주소이다.
+- `news` : Sub Domain
+- `naver.com` : Domain
+- `80` : Port
+- `/main/` : path. Dir 경로이다.
+- `read.nhn` : page. File 이름이다.
+- `?mode=LSD&mid=shm&sid1=105&oid=001&aid=0009847211` : Query. 쿼리문을 통해 사용자가 원하는 데이터를 가져온다.
+- `#da_727145` : fragment.
+
+## 데이터 송수신 방식
+### Get
+- Url에 데이터가 포함된다.
+  * 데이터가 노출될 위험이 있다.
+  * 검색 기능을 구현할 때 주로 사용한다.
+- 길이 제한이 있다. 브라우저별로 길이 제한이 다르다.
+
+### Post
+- Body에 데이터가 포함된다.
+  * 데이터가 숨겨져있다.
+  * 로그인을 할 때 많이 사용한다.
+
+## Cookie & Session & Cache
+### Cookie
+- Client에 저장하는 문자열 데이터이다.
+- 로그인 정보, 최근 검색 리스트 등이 포함된다.
+- 브라우저에서 관리하는 하드디스크 상에 저장된다.
+
+### Session
+- Server에 저장하는 객체 데이터이며, 브라우저와 연결시 Session ID를 생성한다.
+- Session ID를 Cookie에 저장함으로 로그인을 유지한다.
+- 로그인 연결 정보, 원하는 객체 데이터등을 저장한다.
+
+### Cache
+- Client, Server의 메모리에 저장하여 빠르게 데이터를 가져오기위한 저장소이다.
+- Ram에 데이터를 저장하여 빠르게 데이터를 처리한다.
+- Ram이 꽉 찬 경우 가상Ram을 사용하며 이때부터 PC의 속도가 느려진다.
