@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "HTML-CSS-1"
-categories: [Class, ComputerScience]
+categories: [Class, Computer_Science]
 ---
 
 ### 브라우저가 채워지는 과정
