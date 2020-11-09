@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Transaction"
-categories: [Class, Computer_Science]
+categories: [Class, database]
 ---
 
 ## 트랜잭션
