@@ -9,7 +9,7 @@ categories: [Class, Computer_Science]
 - Http 1.0에서 기본으로 사용되던 방식이다.
 - TCP 3Hand Shake 과정을 거쳐서 연결을 이루고 나면, 하나의 요청에 대한 응답을 받고 연결을 닫는다.
 - 지속적으로 요청이 있는 경우에 비효율적이다.
-![short-lived connections](./images/Short-lived connections.JPG)
+![short-lived connections](./_posts/Computer_Science/image/Short-lived connections.JPG)
 
 ### Persistent Connection
 - Http 1.1버전에서 추가된 방식이다.
