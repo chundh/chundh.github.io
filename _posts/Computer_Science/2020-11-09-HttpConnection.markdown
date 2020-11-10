@@ -8,7 +8,7 @@ categories: [Class, Computer_Science]
 ### Short-lived Connection
 - Http 1.0에서 기본으로 사용되던 방식이다.
 - TCP 3Hand Shake 과정을 거쳐서 연결을 이루고 나면, 하나의 요청에 대한 응답을 받고 연결을 닫는다.
-- 지속적으로 요청이 있는 경우에 비효율적이다.
+- 지속적으로 요청이 있는 경우에 3Hand Shake 과정을 반복해서 연결을 해야하므로 비효율적이다.
 
 ![short-lived connections](https://user-images.githubusercontent.com/42088125/98533178-fb014c00-22c5-11eb-81a9-60bbcb70d676.JPG)
 
