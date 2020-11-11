@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Http Connection"
-categories: [Class, Computer_Science]
+categories: [Class, Spring]
 ---
 
 ## Http 연결 방식
