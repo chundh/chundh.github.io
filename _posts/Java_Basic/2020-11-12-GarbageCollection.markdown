@@ -43,3 +43,5 @@ categories: [Class, Java_Basic]
 - Parallel Old GC
 - CMS GC
 - G1 GC
+
+참고: https://d2.naver.com/helloworld/1329,      https://mirinae312.github.io/develop/2018/06/04/jvm_gc.html
