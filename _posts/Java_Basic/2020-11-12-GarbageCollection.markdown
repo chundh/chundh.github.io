@@ -27,7 +27,7 @@ categories: [Class, Java_Basic]
 - Old
   - Survivor영역에 있는 객체 중, Age bit가 MaxTenuringThreshold라는 설정값을 초과한 객체가 넘어오게된다.
   - Old 영역에 있는 객체들은 영역이 가득찬 경우 GC를 진행하는데, 5가지 방법의 GC가 있다.
-  - Old 영역에서 GC가 일어날 때는, Stop-The-World(STO)가 발생하며 이때는 GC를 제외한 모든 쓰레드가 중단된다.
+  - Old 영역에서 GC가 일어날 때는, Stop-The-World가 발생하며 이때는 GC를 제외한 모든 쓰레드가 중단된다.
 
 ### Old 영역의 GC
 - Serial GC
@@ -36,11 +36,11 @@ categories: [Class, Java_Basic]
     - mark: 참조가 되지 않는 삭제해야할 객체를 선택한다.
     - sweep: 선택된 객체를 삭제한다.
     - compact: 삭제되지 않은 객체를 연속되게 합치고, 힙의 앞부분에 위치시켜서 객체가 있는 부분과 없는 부분으로 영역을 분할한다.
-  - GC가 진행되는 동안 STO가 발생하기 때문에 오래걸리는 Serial GC는 지양하는 것이 좋다.
+  - GC가 진행되는 동안 Stop-The-World가 발생하기 때문에 오래걸리는 Serial GC는 지양하는 것이 좋다.
 - Parallel GC
   - Serial GC와 동작 과정은 비슷하지만, 여러개의 쓰레드를 통해 작업을 진행한다.
   - 속도가 더 빠르기 때문에 메모리가 충분하고 코어의 개수가 많을 때 사용하면 좋다.
-  - GC 속도를 빠르게하여 STO 기간을 줄인다.
+  - GC 속도를 빠르게하여 Stop-The-World 기간을 줄인다.
 - Parallel Old GC
 - CMS GC
 - G1 GC
