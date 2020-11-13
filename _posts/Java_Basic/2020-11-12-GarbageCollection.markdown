@@ -19,10 +19,11 @@ categories: [Class, Java_Basic]
       - bump-the-point: 메모리 영역의 마지막 객체를 추적하면서(마지막 객체는 영역의 가장 위), 새로운 객체가 메모리 영역에 적합하면 가장 위에 새로운 객체를 위치하게된다.
     - 이 공간에서 더 이상 호출되지 않는 객체는 Minor GC가 발생하면 사라지게 된다.
     - 사라지지 않은 객체들은 객체가 들어있는 Survivor로 넘어간다.
+    - 영역이 가득찬 경우 GC가 발생한다.
   - Survivor(2개):
     - 해당 영역은 Survivor1, Survivor2로 구성되어 있으며 Minor GC가 발생할 떄 참조되지 않는 객체를 제거한다.
     - 남은 객체는 다른 Survivor로 보낸다. 이 과정을 통해 하나의 Survivor는 무조건 비어있는 상태를 유지한다.
-    - 각 객체는 Survivor 영역에서 이동하는 동안 고유의 Age bit가 1씩 증가하게 된다.
+    - 각 객체는 Survivor 영역에서 Survivor 영역으로 이동할 때 고유의 Age bit가 1씩 증가하게 된다.
 - Old
   - Survivor영역에 있는 객체 중, Age bit가 MaxTenuringThreshold라는 설정값을 초과한 객체가 넘어오게된다.
   - Old 영역에 있는 객체들은 영역이 가득찬 경우 GC를 진행하는데, 5가지 방법의 GC가 있다.
