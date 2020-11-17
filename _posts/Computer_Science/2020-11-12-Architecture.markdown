@@ -43,7 +43,7 @@ categories: [Class, Computer_Science]
   - Controller와 비슷한 사용자의 입력에 반응하는 역할을 Abstract Method의 구현으로 하지만, 클래스 내부에 View 인스턴스를 갖고 있지 않아 독립적이다.
   - View의 화면 구성을 직접하는 것이 아니라, 단순한 데이터만을 전달하고 화면 구성은 View가 한다.
 - 문제점
-  - 각 View마다 Presenter 인스턴스를 각자 갖고 있다.
+  - 각 View마다 Presenter 인스턴스를 각자 갖고 있다. (View와 Presenter는 1:1관계)
   - 그렇기 때문에 n개의 View가 있다면 비슷한 동작을 하는 Presenter가 n개가 생성된다.
 
 ### MVVM
