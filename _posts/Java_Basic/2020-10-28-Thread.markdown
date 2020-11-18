@@ -23,6 +23,9 @@ categories: [Class, Java_Basic]
     - 객체를 보내야 하는 경우 Searialization(직렬화)를 통해 Byte(Primitive Type) 형식으로 변환하여 다른 Process로 보낸다.
 
 ### Thread의 생성
+- Thread를 run()을 통해 생성했다면, 반드시 start()메소드를 통해 실행해야한다.
+  - run()만 호출했다면, 이는 쓰레드를 활용하는 것이 아니라 단순히 run()메소드만을 실행하는 것이다.
+  - start()로 실행해야 쓰레드로 인식되서 context switching을 통해 메소드 실행이된다.
 - Runnable을 익명의 내부 클래스로 선언하고, 메소드를 Override하는 방법
 ```java
 Thread p1 = new Thread(new Runnable() {
