@@ -4,7 +4,11 @@ title:  "Servlet"
 categories: [Class, Spring]
 ---
 
-## Servlet
+## Servlet이란?
+- 자바 플랫폼에서 Web Application을 개발할 때 사용하는 기술이다.
+- Web Application의 확장이 용이하고 플랫폼에 독립적인 개발이 가능하다.
+- 클라이언트의 요청을(req) 받아 이에 대한 로직을 수행 후 응답하는(res) 모듈이다.
+
 ### 특징
 - Multi Thread로 동작하기 때문에 효율적이다.
 - 코드가 자바로 작성되어 실행환경에 상관 없이 잘 실행된다.
