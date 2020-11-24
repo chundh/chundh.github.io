@@ -49,6 +49,7 @@ categories: [Class, Spring]
 
 ### 사용방법
 - web.xml
+
 ```javascript
 <servlet>
   <servlet-name>getBoardList</servlet-name>
@@ -74,7 +75,7 @@ protected void service(HttpServletRequest request, HttpServletResponse response)
   - response.sendRedirect("url.do" or "url.html")로 다른 페이지를 호출할 수 있다.
   - 하지만 MVC 아키텍처를 생각해보면 Servlet에서 페이지 구성까지 하는것은 의존도가 높아지는 것이다.
   - 그래서 oontroller역할만 Servlet이 하고, View역할은 JSP로 넘기자!
-    - 
+    - [JSP를 활용한 MVC](https://chundh.github.io/posts/Servlet/)
 
 
 ## Filter
