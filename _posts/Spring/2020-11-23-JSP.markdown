@@ -1,0 +1,29 @@
+---
+layout: post
+title:  "JSP"
+categories: [Class, Spring]
+---
+
+## JSP
+### MVC 아키텍처
+- 기존의 JSP에는 디자인과 Java Logic이 둘다 있다.
+- 유지보수가 너무 힘들어서 Java로직을 JSP에서 분리하기로 했다.
+- Model
+  - DB와 연동하는 dao, vo
+- View
+  - JSP
+- Controller
+  - Servlet에 구현해 놓은 Java코드
+- 하지만 동적으로 데이터를 갖고오기 위해서 JSP에서 모든 자바코드를 지우기가 힘들다
+  - JSP, EL, JSTL을 통해 의존성을 모두 없앨 수 있다.
+  - EL (Expression Language)
+    - JSP 파일에서 request나 session은 내장 객체라고 한다.
+    - 이 내장 객체에 등록한 데이터를 접근하기 위한 표현식.
+    - `${board.seq }` 은 내장객체에 board가 저장되어 있다면, seq를 가져온다.
+    - seq가 private이라면 getSeq()를 알아서 실행해서 가져온다.
+    - board가 없으면 에러를 표출하지 않고 통과한다.
+    - request와 session에 둘다 데이터를 갖고 있으면 request에서 우선적으로 데이터를 가져온다.
+  - JSTL(JSP Standard Tag Library)
+    - JSP파일에서 if, for switch와 같은 자바코드를 대체하는 JSP 표준 태그
+    - `<c:if test="${user.role == 'ADMIN' }">`은 user가 있고, user의 role==ADMIN 이면 이라는 조건문이다.
+    - `<c:forEach var="board" items="${boardList }">` 은 boardList에서 board가 있을때까지 가져오는 반복문이다.

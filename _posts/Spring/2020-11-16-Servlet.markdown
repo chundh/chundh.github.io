@@ -1,0 +1,123 @@
+---
+layout: post
+title:  "Servlet"
+categories: [Class, Spring]
+---
+
+## Servlet
+### 특징
+- Multi Thread로 동작하기 때문에 효율적이다.
+- 코드가 자바로 작성되어 실행환경에 상관 없이 잘 실행된다.
+- 웹서버와 무관하게 실행된다.
+- 내부적으로 쓰레드 풀을 갖고 있고, 이를 통해 쓰레드를 활용한다.
+
+### 생성 규칙과 생성 과정
+- HttpServlet 클래스를 상속해야한다.
+- public 클래스로 만들어야한다.
+- default 생성자가 있어야한다.
+  - 그래서 변수 값 정의 등의 초기화는 init()을 Override하여 진행한다.
+- 요청 방식(method)에 따라 doGet이나 doPost를 재정의(Override)한다.
+  - 부모(HttpServlet) 클래스의 메소드를 Override하지 않으면 부모클래스의 메소드로 실행이된다.
+- 최초 사용할 때는 메모리에 적재하고, 디폴트 생성자 호출, initialize 과정을 거치면서 시간이 오래걸린다
+  - 두번째 실행단계부터는 이미 메모리에 적재가 되어있으므로 쓰레드풀에 바로 들어가고, 쓰레드풀에서 쓰레드를 갖고와서 실행하게된다.
+- 웹 페이지가 호출되면 톰캣 안의 서블릿 엔진이 객체를 생성하고, doGet메소드를 호출한다.
+  - 서블릿 엔진은 web.xml을 기반으로 생성된다.
+  - 서블릿은 서블릿 엔진에 의해 생성된다.
+- 서블릿 엔진은 내부에 쓰레드풀을 갖고 있다. 그래서 우선순위에따라 쓰레드를 가져오고, doGet, doPost를 실행하게끔한다.
+
+### 주로 구현하는 Method
+- `init(ServletConfig config) throws ServletException`
+  - 생성자에서 초기화 해주지 못하는 변수들을 초기화 해준다.
+- `service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException`
+  - 쓰레드 풀에서 가져온 쓰레드에서 서비스 메소드를 호출한다.
+  - 부모 클래스의 service메소드에서는 request method가 GET인지 POST인지 판단하고 doGet, doPost를 호출한다.
+- `doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException`
+  - URI에 포함되어 있는 데이터를 활용해 response message를 작성한다.
+- `doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException`
+  - request message body에 있는 데이터를 활용해 response message를 작성한다.
+- `destroy()`
+  - 생성한 객체를 close한다.
+- default 생성자 -> init -> service -> doGet or doPost -> destory 순으로 호출된다.
+
+### Data Flow
+- Servlet request가 생성된다.
+- 메모리에 요청하는 것에 대한 Servlet이 있는지 확인한다.
+  - 메모리에 있으면 바로 Thread에 할당한다.
+  - 없으면 메모리에 적재 후 Thread에 할당한다.
+- Service()메소드가 호출된다.
+- doGet()이나 doPost() 메소드에서 request에 따른 response를 작성한다.
+
+### 사용방법
+- web.xml
+```javascript
+<servlet>
+  <servlet-name>getBoardList</servlet-name>
+  <servlet-class>com.rubypaper.web.board.GetBoardListServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>getBoardList</servlet-name>
+  <url-pattern>/getBoardList.do</url-pattern>
+</servlet-mapping>
+```
+
+  - web.xml에 다음과 같은 코드를 작성해야한다.
+  - Servlet 이름(`<servlet-name>`)과 이를 구성하는 클래스(`<servlet-class>`)와 해당 Servlet과 매핑되는 url(`<url-pattern>`)을 정의한다.
+
+- GetBoardListServlet.java
+``` java
+protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+```
+
+  - 파라미터인 request와 response를 활용해 페이지를 구성한다.
+  - request.getSession()으로 세션정보를 가져올 수 있다.
+  - response.getWriter를 통해 현재 페이지를 작성할 수 있다.
+  - response.sendRedirect("url.do" or "url.html")로 다른 페이지를 호출할 수 있다.
+  - 하지만 MVC 아키텍처를 생각해보면 Servlet에서 페이지 구성까지 하는것은 의존도가 높아지는 것이다.
+  - 그래서 oontroller역할만 Servlet이 하고, View역할은 JSP로 넘기자!
+    - 
+
+
+## Filter
+### 특징
+- Servlet이 생성되기 전에 호출된다.
+- Req message를 Servlet에 접근하기 전에 사전처리하거나 사후처리할 수 있다.
+- 체인의 형태로 형성되어서 xml에 등록되어 있는 Filter의 순서대로 차례대로 호출되거나, Filter내부에서 다른 클라이언트를 호출한다.
+
+### 주로 구현하는 Method
+- `init(FilterConfig filterConfig) throw ServletException`
+  - 웹 컨테이너에 생성한 후 초기화 할 때 호출한다.
+- `doFilter(ServletRequest request, SevletResponse response, FilterChain chain) throws java.io.IOException, ServletException`
+  - Filter에서 할 코드를 작성하는 부분이다.
+  - 체인을 따라서 다음 필터로 이동한다.
+  - 체인의 마지막에는 실행할 클라이언트가 위치한다.
+  - 중간에 클라이언트를 호출하는 Filter가 있다면 뒤에 Filter는 실행되지 않는다.
+- `destroy()`
+  - 웹 컨테이너에서 삭제될 때 호출된다.
+
+### 사용방법
+```javascript
+<filter>
+  <display-name>loginCheck</display-name>
+  <filter-name>loginCheck</filter-name>
+  <filter-class>com.rubypaper.web.common.LoginCheckFilter</filter-class>
+  <init-param>
+     <param-name>paramName</param-name>
+     <param-value>value</param-value>
+  </init-param>
+</filter>
+<filter-mapping>
+  <filter-name>loginCheck</filter-name>
+  <url-pattern>*.do</url-pattern>
+</filter-mapping>
+```
+
+- web.xml에 다음과 같은 코드를 작성해야한다.
+- `*.do`는 사용자가 모든 .do url에 접근할 때 해당 필터를 우선적으로 거치게 된다는 것이다.
+- 위의 코드는 모든 .do에 접근할 때, LoginCheckFilter 클래스가 호출된다.
+- 해당 필터에서 세션을 확인, 인코딩, 시간 체크 등 Servlet접근 전,후로 여러 작업을 할 수 있다.
+- `<init-param>`에는 init()메소드가 호출될 때 전달해야하는 파라미터 값이 들어간다. 주로 필터를 사용하기 전에 초기화해야하는 객체에 필요한 정보를 저장하기 위해 사용한다.
+
+## 내부적으로 사용되는 Session
+- session은 브라우저에 하나씩 할당되고, 서버에 저장된다.
+- 그렇기에 사용자가 10000명이 접속하면 session도 10000개가 생성된다.
+- session에는 사용자와 관련된(로그인, 암호)등의 최소한의 데이터만 넣어서 메모리 낭비를 최소화하자.
