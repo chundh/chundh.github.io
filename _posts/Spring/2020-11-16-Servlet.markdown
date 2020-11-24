@@ -81,6 +81,8 @@ protected void service(HttpServletRequest request, HttpServletResponse response)
   - 그래서 oontroller역할만 Servlet이 하고, View역할은 JSP로 넘기자!
     - [JSP를 활용한 MVC](https://chundh.github.io/posts/JSP/)
 
+- Servlet의 생명주기
+  - [참고 자료](https://codevang.tistory.com/193)
 
 ## Filter
 ### 특징
