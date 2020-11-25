@@ -72,6 +72,7 @@ GenericXmlApplicationContext container = new GenericXmlApplicationContext("appli
   <constructor-arg ref="speaker" />
   <constructor-arg value="1500"/></bean>
   ```
+
   - `constructor-arg`태그를 통해 생성자에 들어갈 파라미터를 정의할 수 있다.
   - 컨테이너는 파라미터에 알맞는 생성자를 알아서 실행해준다.
   - `constructor-arg`태그의 속성에는 ref와 value가 있다.
@@ -80,12 +81,12 @@ GenericXmlApplicationContext container = new GenericXmlApplicationContext("appli
   - 위와 같이 다른 클래스의 객체를 사용해야할 때 클래스 내부에서 생성하지 않고, xml상으로 정의해서 내부의 java코드의 speaker에 대한 의존성을 낮출 수 있다.
 - Setter Injection
   - 각 클래스에서 필요한 다른 클래스 객체를 직접 생성하지 않고, Setter method를 활용해 객체를 사용한다.
-  
   ```java
   <bean id="tv" class="polymorphism4.SamsungTV">
 		<property name="speaker" ref="speaker"></property>
 		<property name="price" value="160000"></property></bean>
   ```
+
   - `property` 태그로 Setter method를 정의할 수 있다.
   - `property` 태그의 속성에는 name, ref, value가 있다.
     - name 속성으로 호출할 Setter method를 정의한다.
