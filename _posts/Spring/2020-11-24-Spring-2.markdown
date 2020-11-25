@@ -90,3 +90,14 @@ GenericXmlApplicationContext container = new GenericXmlApplicationContext("appli
     - name 속성으로 호출할 Setter method를 정의한다.
     - 이때 method의 Set부분을 지우고, 첫글자를 소문자로 만든 문자열을 사용하는 것이 규칙이다.(SetSpeaker -> speaker)
     - ref, value는 `constructor-arg`에서의 기능과 같다.
+- Type Injection
+  - Annotation중 @Autowired를 활용해 클래스 내부에서 다른 클래스의 객체를 직접 생성하지 않도록 한다.
+  ```java
+  @Autowired
+  private AppleSpeaker speaker;
+  ```
+  - 변수의 타입을 기준으로 알아서 의존성 주입을 처리한다.
+  - 해당 타입의 객체가 메모리상에 있으면, 컨테이너가 그 객체를 변수에 할당해준다.
+    - getBean, Annotation을 활용해서 생성한 객체들은 xml이 읽히는 시점에 메모리상에 적재된다.(Pre-Loading)
+    - 사용자의 호출에 따라 객체 생성하는 것은 Lazy-Loading이다.
+  - 객체가 메모리상에 없다면, Exception이 발생된다.
