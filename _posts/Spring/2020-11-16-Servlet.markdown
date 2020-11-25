@@ -84,6 +84,13 @@ protected void service(HttpServletRequest request, HttpServletResponse response)
 - Servlet의 생명주기
   - [참고 자료](https://codevang.tistory.com/193)
 
+### Servlet Container
+- web.xml을 로드하여 Servlet 정보를 갖고 있다.
+- 웹에서 요청이 들어올 때 해당 요청은 Servlet Container로 들어간다.
+- 어떤 Servlet을 실행할지 결정후, 메모리에 해당 Servlet이 저장되어 있는지 확인한다.
+- 작업을 스레드에 할당하여 service() -> doPost or doGet을 실행한다.
+- 사용자의 요청을 동적으로 처리하는 것을 담당한다.
+
 ## Filter
 ### 특징
 - Servlet이 생성되기 전에 호출된다.
