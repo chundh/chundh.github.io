@@ -103,3 +103,9 @@ GenericXmlApplicationContext container = new GenericXmlApplicationContext("appli
     - getBean, Annotation을 활용해서 생성한 객체들은 xml이 읽히는 시점에 메모리상에 적재된다.(Pre-Loading)
     - 사용자의 호출에 따라 객체 생성하는 것은 Lazy-Loading이다.
   - 객체가 메모리상에 없다면, Exception이 발생된다.
+
+### XML로 프로그램을 제어했을때 장점
+- 자바 파일의 변경이 없으므로, 실행 시간이 단축된다.
+  - 자바 파일을 .class로 바꾸는 컴파일 과정이 일어나지 않고, 기존의 바이트코드를 가져와 사용한다.
+  - 변경된 xml의 내용만 런타임때 읽고, 실행한다.
+- xml로 제어하기위해 Dependency Injection을 신경쓰게 되고, 해당 과정을 통해 각 클래스간 의존성을 줄일 수 있다.
