@@ -1,0 +1,140 @@
+---
+layout: post
+title:  "AOP(Aspect Oriented Programming)"
+categories: [Class, Spring]
+
+---
+
+## AOP란?
+- Aspect Oriented Programming의 약자이며 관점 지향 프로그래밍이라고 부른다.
+- 코드를 핵심관심과(Core Concerns) 횡단관심(Crosscutting Concerns)으로 나눈다.
+- 코드를 나누고 하나의 단위로 모듈화하여 모듈의 재사용성을 높이는 것을 추구한다.
+- 자주 바뀌는 부분과 아닌 부분을 나눠서 테스트 단계에서의 시간 소모를 줄인다.
+  - 바뀌는 부분만 빌드해서 컴파일 타임을 줄일 수 있다.
+
+## 핵심관심과 횡단관심
+- 핵심 관심: 비즈니스 로직에 해당하는 것
+- 횡단 관심: 단순히 반복되는, 비즈니스 로직에 해당하지 않는 것
+  - Exception, 입출력, DB연동 등 반복적으로 사용될 수 있는 코드
+  - 이들을 클래스로 분리해서 공통적으로 관리한다.
+- 두 코드를 분리해서 관리하자.
+- 핵심관심과 횡단관심은 서로간에 의존성이 없다.
+  - 기능이 변경되는 경우 다른 클래스로 쉽게 변경할 수 있다.
+
+### 5가지 특성
+- JoinPoint
+  - 클라이언트가 호출하는 비즈니스 로직이 포함된 메소드
+- Pointcut
+  - 필터링된 JointPoint
+  - 원하는 메소드에서만 특정 메소드가 설정되도록 필터링을 할 수 있다.
+- Advice
+  - 비즈니스 로직이 포함된 메소드마다 공통적으로 실행될 코드
+  - 보통 메소드로 구현된다.
+  - 동작 시점이 5개가 있다.
+- Weaving
+  - 내용 추가
+- Aspect or Advisor
+
+
+## xml과 Annotation
+- 두가지 방식으로 모두 구현이 가능하다
+- 대규모 프로젝트의 경우 java파일을 반복해서 빌드하지 않아도 된다는 장점에 xml을 이용한 방식이 쓰인다.
+
+## XML을 활용한 AOP
+### `<aop:config>`
+- `<aop:config>` 태그를 선언하고, 해당 태그 구역 안에서 aop 정보를 설정할 수 있다.
+- pointcut 설정을 위한 `<aop:pointcut>`가 추가된다.
+- pointcut을 사용하는 `<aop:aspect>`가 추가된다.
+
+### `<aop:pointcut>`
+- 비즈니스 로직의 실행 범위를 묶고, 이를 id로 구분한다.
+- 예시 : `<aop:pointcut id="allPointcut" expression="execution(* com.rubypaper.biz..*Impl.*(..))"/>`
+  - `com.rubypaper.biz` 패키지의 모든 하위패키지에서, 클래스 이름이 ~Impl인 클래스에 있는 모든 return type의 메소드가 실행될때 allPointcut을 활용해 전,후 작업을 할 수 있다.
+- id : 해당 pointcut을 사용하기 위해서 필요한 id를 설정한다.
+- expression : 해당 pointcut에 해당되는 패키지, 클래스를 설정한다.
+  - expression은 총 5가지로 구성된다.
+  - return type : 위의 예시에서는 `*`을 사용해서 모든 return type을 가리켰고, void, int 등의 return type을 사용할 수 있다.
+  - pakage dir : 위의 예시에서는 com.rubypaper.biz까지가 패키지 경로에 해당한다. 마지막에 `..`을 붙이면, 하위 패키지 전체가 범위에 해당된다.
+  - class name : 패키지 내부 클래스중 특정 클래스를 설정할 수 있다. 위의 예시에서는 `*Impl`로 classImpl, examImpl 등의 이름을 갖는 클래스가 범위에 해당된다.
+  - method : 위의 예시에서는 `*`을 사용해서 모든 메소드를 가리켰다. 그 외에도 특정 메소드를 가리킬 수 있고, `*get`을 사용해서 모든 getter메소드를 범위로 설정할 수 있다.
+  - parameter : 위의 예시에서는 `(..)`을 사용해서 모든 파라미터를 범위로 한다. `(int, double)`등의 특정 파라미터를 설정할 수 있다.
+
+### `<aop:aspect>`
+- 이 태그는 pointcut과 advice를 결합하는 역할을 한다.
+- pointcut에 해당하는 메소드가 호출이 되면, 특정 메소드를 특정 시점에 호출하는 것을 가능하게한다.
+- 예시 :
+
+  ```xml
+  <aop:aspect ref="Log">
+	<aop:before pointcut-ref="allPointcut" method="printLog"/>
+  </aop:aspect>`
+  ```
+
+- ref : pointcut에 해당하는 메소드가 호출됬을때 특정시점에 호출할 메소드를 포함하는 클래스 id이다.
+- 시점
+  - 시점에는 총 5가지가 있다.
+  - `<aop:before>` : pointcut에 해당하는 메소드가 호출되기 전에 ref의 method가 호출된다.
+  - `<aop:after>` : pointcut에 해당되는 메소드가 호출된 후 ref의 method가 호출된다.
+  - `<aop:after-returning>` : pointcut에 해당되는 메소드의 return 값을 갖고 ref의 method가 호출된다.
+    - `returning`이라는 속성을 추가해야하고, 속성값에는 파라미터의 변수이름이 들어간다.
+    - return 값이 없어도, method는 호출된다.
+  - `<aop:after-throwing>` : pointcut에 해당되는 메소드 실행 중, throwing이 발생하는 경우 ref의 method가 호출된다.
+  - `<aop:around>` : pointcut에 해당되는 메소드가 호출되기 전, 후를 모두 처리할 수 있다. 이때 ref의 method안에는 `ProceedingJoinPoint 클래스의 proceed()`메소드를 호출하는 구문이 반드시 있어야 pointcut에 해당하는 비즈니스 로직이 정상적으로 작동할 수 있다.
+
+
+## Annotation을 활용한 AOP
+### xml 내부 설정
+- xml에 다음과 같은 코드를 넣어야한다.
+- `<context:component-scan base-package="com.rubypaper.biz"></context:component-scan>` : com.rubypaper.biz 패키지 내부에 있는 Annotation을 scan하는 코드이다.
+- `<aop:aspectj-autoproxy/>` : Annotation기반의 aop를 설정하기 위해 필요한 코드이다.
+
+### Pointcut 클래스 구성
+- 횡단 관심에 해당 클래스는 DB연동, 입출력 등의 비즈니스 로직 외의 기능을 하는 클래스이다.
+- 이들은 비즈니스 로직을 포함하는 메소드가 실행될 때 같이 실행된다.
+- 실행되는 비즈니스 로직(pointcut)을 모두 각 횡단관심 클래스에 선언해주면 코드의 중복이 일어나므로, 하나의 클래스에 pointcut을 묶어서 관리하면 코드의 중복을 줄일 수 있다.
+
+```java
+@Aspect
+public class BoardPointcut {
+
+	@Pointcut("execution(* com.rubypaper.biz..*Impl.*(..))")
+	public void allPointcut() {}
+
+	@Pointcut("execution(* com.rubypaper.biz..*Impl.get*(..))")
+	public void getPointcut() {}
+
+	@Pointcut("execution(* com.rubypaper.biz.user.*Impl.*(..))")
+	public void userPointcut() {}
+
+	@Pointcut("execution(* com.rubypaper.biz.board.*Impl.*(..))")
+	public void boardPointcut() {}
+
+}
+```
+
+- `@Aspect` : 해당 클래스가 횡단 관심임을 나타내는 Annotation이다.
+- `@Pointcut` : 횡단 관심이 실행될 비즈니스 로직을 설정한다. xml에서의 `<aop:pointcut>`과 동일하다.
+- 이 클래스에 선언되어있는 메소드들은 내용이 비어있는 메소드이다. 이들은 특정 기능을 수행하기 위해 있는 것이 아니라, 각 pointcut을 구별하고 aspect에 의해 advice와 연결될 때 사용된다.
+
+
+### 횡단 관심 클래스 구성
+- 횡단 관심에 해당하는 메소드 위에 aop의 시점을 Annotation으로 부여한다.
+  ```java
+  @Around("BoardPointcut.allPointcut()")
+  public Object aroundLog(ProceedingJoinPoint jp) {}
+
+  @AfterThrowing(pointcut="BoardPointcut.allPointcut()", throwing="exceptionObj")
+  public void exceptionLog(JoinPoint jp, Exception exceptionObj){}
+
+  @AfterReturning(pointcut="BoardPointcut.getPointcut()", returning="returnObj")
+  public void afterLog(Object returnObj){}
+  ```
+
+- 횡단 관심의 각 메소드가 BoardPointcut 클래스의 allPointcut(), getPointcut()등에 해당하는 비즈니스 로직이 실행되기 전, 후로 실행된다.
+- AfterReturning의 경우 return 받는 파라미터에 어떤 타입의 객체가 올지 알 수 없으므로 Object 타입을 사용한다.
+- 파라미터에 들어있는 JoinPoint, ProceedJoinPoint는 이 횡단 관심 메소드를 호출한 비즈니스 로직에 대한 정보가 들어있다.
+  - `jp.getSignature().getName()` : 횡단 관심 메소드를 호출한 비즈니스 로직 메소드의 이름
+  - `jp.getArgs()` : 비즈니스 로직에서 전달한 인자 정보
+
+- 위의 방식으로 설정한 후, 메소드는 Spring 컨테이너에 의해 호출된다.
+- 개발자는 비즈니스 로직 구현에 집중하고, 객체 생성, 메소드 호출등은 컨테이너가 담당한다.

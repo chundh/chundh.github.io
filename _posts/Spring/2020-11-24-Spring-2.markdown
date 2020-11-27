@@ -108,4 +108,5 @@ GenericXmlApplicationContext container = new GenericXmlApplicationContext("appli
 - 자바 파일의 변경이 없으므로, 실행 시간이 단축된다.
   - 자바 파일을 .class로 바꾸는 컴파일 과정이 일어나지 않고, 기존의 바이트코드를 가져와 사용한다.
   - 변경된 xml의 내용만 런타임때 읽고, 실행한다.
+  - 자바 파일이 바뀐경우 바뀐 부분만 다시 컴파일 되지만, 해당 파일들을 모두 빌드하는 과정에서 컴파일타임이 추가로 소모되므로, 최대한 자바파일의 변경 없이 테스트를 하는 것이 좋다.
 - xml로 제어하기위해 Dependency Injection을 신경쓰게 되고, 해당 과정을 통해 각 클래스간 의존성을 줄일 수 있다.
