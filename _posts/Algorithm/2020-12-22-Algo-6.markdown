@@ -1,0 +1,69 @@
+---
+layout: post
+title:  "백준-11003-최솟값 찾기"
+categories: [Class, Algorithm]
+---
+
+### [문제 링크](https://www.acmicpc.net/problem/11003)
+
+## 접근 방법
+- 데이터의 수는 500만개까지이다.
+- O(n)의 시간복잡도로 해결해야한다.
+- 데이터를 받음과 동시에 처리하자.
+- 데이터 입출력의 횟수가 많으므로 BufferedReader와 BufferedWriter를 사용하자.
+
+### 1. Priority Queue를 사용하자
+- 우선순위 큐에 데이터를 삽입한다.
+- peek()의 index값이 i-L+1보다 작다면 poll()해준다.
+- peek()에 있는 데이터를 Stringbuilder에 넣어준다.
+- 결과 : 시간초과
+- 원인 : 우선순위 큐에 데이터를 삽입하고, peek하는 과정에서 내부적인 연산과정이 시간이 많이 걸린다.
+
+### 2. Deque를 사용하자
+- Deque에 있는 데이터를 오름차순으로 정렬된 상태를 유지하면서 데이터를 삽입한다.
+- 기존에 있는 데이터중 현재의 데이터보다 num이 큰것은 Deque에 저장되어 있을 필요가 없다.
+  - 현재 데이터를 사용할 수 있는 범위가 더 넓기 때문이다.
+- getFirst()에 있는 데이터가 i-L+1보다 작다면 removeFirst()해준다.
+- getFirst()에 있는 데이터를 StringBuilder에 넣어준다.
+- 결과 : 시간초과
+- 원인
+  - ArrayDeque로 바꿔서 로직을 구현하니 정답이 나왔다.
+  - ArrayDeque와 Deque의 차이점에 대해 알아봐야할 것 같다.
+- 가정
+  - LinkedList의 구현체인 Deque보다 ArrayDeque가 더 효율적이다.
+  - Deque의 addLast()보다 ArrayDeque의 offer()가 효율적이다.
+  - Deque의 getFirst(), getLast()보다 ArrayDeque의 peekFisrt(), peekLast()가 더 효율적이다.
+
+### 코드
+```java
+import java.io.*;
+import java.util.ArrayDeque;
+import java.util.StringTokenizer;
+
+public class 백준_11003_최솟값찾기 {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int l = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(br.readLine());
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        int[] val = new int[n];
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            val[i] = Integer.parseInt(st.nextToken());
+            while (!queue.isEmpty() && val[queue.peekLast()] > val[i]) {
+                queue.pollLast();
+            }
+            queue.offer(i);
+            if(queue.peekFirst() < i-l+1)
+                queue.pollFirst();
+            sb.append(val[queue.peekFirst()] + " ");
+        }
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
+}
+```
