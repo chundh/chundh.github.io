@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "JSP"
+title:  "Tomcat과 Nginx"
 categories: [Class, Spring]
 ---
 
